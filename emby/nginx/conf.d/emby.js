@@ -1,7 +1,7 @@
 //查看日志: "docker logs -f -n 10 emby-nginx 2>&1  | grep js:"
 async function redirect2Pan(r) {
     //根据实际情况修改下面4个设置
-    const embyHost = 'http://embyserver:8096'; //这里默认emby/jellyfin的地址是宿主机,要注意iptables给容器放行端口
+    const embyHost = 'http://43.136.231.90:8096'; //这里默认emby/jellyfin的地址是宿主机,要注意iptables给容器放行端口
     const embyMountPath = '/mnt/share/pan';  // rclone 的挂载目录, 例如将od, gd挂载到/mnt目录下:  /mnt/onedrive  /mnt/gd ,那么这里 就填写 /mnt
     const alistPwd = '123456';      //alist password
     const alistApiPath = 'http://192.168.1.10:5244/api/public/path'; //访问宿主机上5244端口的alist api, 要注意iptables给容 器放行端口
@@ -86,14 +86,13 @@ async function fetchAlistPathApi(alistApiPath, alistFilePath, alistPwd) {
         if (response.ok) {
             const result = await response.json();
             if (result === null || result === undefined) {
+
                 return `error: alist_path_api response is null`;
             }
+
             if (result.message == 'success') {
-                if (result.data.type == 'file') {
-                    return result.data.files[0].url;
-                }
-                if (result.data.type == 'folder') {
-                    return result.data.files.map(item => item.name).join(',');
+                if (!result.data.is_dir) {
+                   return result.data.raw_url;
                 }
             }
             if (result.code == 401) {
