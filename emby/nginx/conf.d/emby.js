@@ -2,7 +2,7 @@
 async function redirect2Pan(r) {
     //根据实际情况修改下面4个设置
     const embyHost = 'http://43.136.231.90:8096'; //这里默认emby/jellyfin的地址是宿主机,要注意iptables给容器放行端口
-    const embyMountPath = '/mnt';  // rclone 的挂载目录, 例如将od, gd挂载到/mnt目录下:  /mnt/onedrive  /mnt/gd ,那么这里 就填写 /mnt
+    const embyMountPath = '/mnt/aliyun';  // rclone 的挂载目录, 例如将od, gd挂载到/mnt目录下:  /mnt/onedrive  /mnt/gd ,那么这里 就填写 /mnt
     const alistPwd = 'shuffle123';      //alist password
     const alistApiPath = 'http://43.136.231.90:5244/api/public/path'; //访问宿主机上5244端口的alist api, 要注意iptables给容 器放行端口
 
@@ -14,7 +14,7 @@ async function redirect2Pan(r) {
 
     //infuse用户需要填写下面的api_key, 感谢@amwamw968
     if ((api_key === null) || (api_key === undefined)) {
-        api_key = '0ceb397b5fa9495494b5e2c9dc17effa';//这里填自己的emby/jellyfin API KEY
+        api_key = 'a957aca916a34df6b198a9dde923c87b';//这里填自己的emby/jellyfin API KEY
         r.warn(`api key for Infuse: ${api_key}`);
     }
 
